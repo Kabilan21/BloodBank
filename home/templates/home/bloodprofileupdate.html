@@ -1,0 +1,46 @@
+  <br>
+  Name :<br>
+  <div  class="form-group" style="max-width: 300px;padding-top: 4px;">
+    <input type="text"  class="form-control" id="name" value="{{donor.name}}" required="true"/>
+  </div>
+  Email :<br>
+  <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+    <input type="text"  class="form-control" id="email" value="{{donor.email}}"  required="true"/>
+  </div>
+  Phone Number :<br>
+  <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+    <input type="text"  class="form-control" id="number" value="{{donor.number}}" required="true"/>
+  </div>
+  Place or Location :
+  <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+    <input type="text"  class="form-control" id="location" value="{{donor.location}}"  required="true"/>
+  </div>
+  <div class="row" style="padding-top: 4px;">
+    <div class="col-8 col-lg-3 col-md-5" >
+      Receive email notification :
+    </div>
+    <div class="col-1">
+      <input type="checkbox" style="width: 25px;height: 25px;" {% if donor.receive_mail %}checked{% endif %} id="receive_mail" />
+    </div>
+  </div>
+  <br>
+  <div class="row" style="padding-top: 4px;">
+    <div class="col-8 col-lg-3 col-md-5" >
+      Do not show my profile in blood search results :
+    </div>
+    <div class="col-1">
+      <input type="checkbox" style="width: 25px;height: 25px;" {% if donor.show_onsearch %}checked{% endif %} id="show_onsearch"  />
+    </div>
+  </div>
+  <br>
+  More about your availability and location :<br>
+  <textarea id="more_location"  class="form-group" cols="40" style="padding: 10px;border-radius: 10px;margin-top: 10px;" rows="3">{{donor.more_location}}</textarea>
+  <br>
+  <div class="row">
+    <div class="col-6">
+      <button  onclick="updateprofile()"  class="btn btn-primary">Update</button>
+    </div>
+    <div class="col-6">
+      <button onclick="deleteprofile()" class="btn btn-primary">Delete</button>
+    </div>
+  </div>

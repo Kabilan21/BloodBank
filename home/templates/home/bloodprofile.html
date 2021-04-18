@@ -1,0 +1,84 @@
+{% extends 'home/template.html' %}
+{% block content %}
+{% load static %}
+<main id="main">
+  <section class="contact" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    {% if messages %}
+    <div class="container">
+      <div style="font-size: 16px;padding-bottom: 14px;">
+        {% for message in messages %}
+        {{message}}
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <div class="container">
+      Enter your email :
+      <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+        <input type="email" autocomplete="off" class="form-control" name="location" id="place_location"
+          required="true" />
+      </div>
+      <button class="btn btn-primary" onclick="get_account()">Submit</button>
+      <div id="account_details"></div>
+
+    </div>
+
+    {% endif %}
+  </section>
+</main>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+  var primary = -1;
+  function get_account() {
+    var email = document.getElementById('place_location');
+    var result = document.getElementById('account_details');
+    $.ajax({
+      url: "{% url 'bloodprofile' %}",
+      method: "POST",
+      data: { 'email': email.value, 'csrfmiddlewaretoken': "{{csrf_token}}", },
+      success: function (data) {
+        result.innerHTML = data['html_data'];
+        primary = data['bloodpk'];
+        console.log(primary);
+      }
+    });
+
+  }
+
+  function updateprofile() {
+    var name = document.getElementById('name');
+    var email = document.getElementById('email');
+    var number = document.getElementById('number');
+    var receive_mail = document.getElementById('receive_mail');
+    var show_onsearch = document.getElementById('show_onsearch');
+    var location = document.getElementById('location');
+    var more_location = document.getElementById('more_location');
+    var result = document.getElementById('account_details');
+    $.ajax({
+      url: "{% url 'profileupdate' %}",
+      method: "POST",
+      data: { 'operation': 'update', 'pk': primary, 'name': name.value, 'email': email.value, 'number': number.value, 'receive_mail': receive_mail.value, 'show_onsearch': show_onsearch.value, 'location': location.value, 'more_location': more_location.value, 'csrfmiddlewaretoken': "{{csrf_token}}", },
+      success: function (data) {
+        console.log(data['status']);
+        result.innerHTML = 'Your profile has been updated successfully.'
+      }
+    });
+
+  }
+  function deleteprofile() {
+    var result = document.getElementById('account_details');
+    $.ajax({
+      url: "{% url 'profileupdate' %}",
+      method: "POST",
+      data: { 'operation': 'delete', 'pk': primary, 'csrfmiddlewaretoken': "{{csrf_token}}", },
+      success: function (data) {
+        console.log(data['status']);
+        result.innerHTML = 'Your profile has been successfully deleted .'
+      }
+    });
+
+  }
+</script>
+{% endblock %}

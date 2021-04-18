@@ -1,0 +1,86 @@
+{% extends 'home/template.html' %}
+{% block content %}
+{% load static %}
+<main id="main">
+  <section class="contact" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    {% if messages %}
+    <div class="container">
+      <div style="font-size: 16px;padding-bottom: 14px;">
+        {% for message in messages %}
+        {{message}}
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <div class="row">
+      <div class="container" style="padding-left: 40px;padding-right: 40px;">
+        <form method="post">
+          {% csrf_token %}
+          Patient's name :<br>
+          <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+            <input type="text" class="form-control" name="patient_name" required="true" />
+          </div>
+          Attender's name or Your name :<br>
+          <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+            <input type="text" class="form-control" name="attender_name" required="true" />
+          </div>
+          Email :<br>
+          <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+            <input type="text" class="form-control" name="email" required="true" />
+          </div>
+          Phone Number :<br>
+          <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+            <input type="text" class="form-control" name="number" required="true" />
+          </div>
+          Hospital :
+          <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+            <input type="text" class="form-control" name="hospital_name" required="true" />
+          </div>
+          <label for="cars">Blood Group : &emsp;</label>
+          <select id="bood_group" class="form-group" name="bloodgroup">
+            {% for each in blood_choice %}
+            <option value="{{each}}">{{each}}</option>
+            {% endfor %}
+          </select><br>
+
+          <br>
+          <div class="row">
+            <div class="col-4" style="padding-top: 10px;">
+              Blood units :
+            </div>
+            <div class="col-3">
+              <div class="form-group" style="max-width: 100px;padding-top: 4px;">
+                <input type="text" class="form-control" name="blood_units" required="true" />
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <div class="row" style="padding-top: 4px;">
+            <div class="col-8 col-lg-3 col-md-5">
+              Can you afford travel costs of the donor? :
+            </div>
+            <div class="col-1">
+              <input type="checkbox" style="width: 25px;height: 25px;" name="can_afford_travel" />
+            </div>
+          </div>
+          <br>
+          More about Location :
+          <div class="form-group" style="max-width: 300px;padding-top: 4px;">
+            <textarea name="location" class="form-group" cols="40"
+              style="padding: 10px;border-radius: 10px;margin-top: 10px;" rows="3"></textarea>
+          </div>
+
+          <div class="float-right">
+            <button class="btn btn-primary">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+    {% endif %}
+  </section>
+</main>
+<script>
+</script>
+{% endblock %}
